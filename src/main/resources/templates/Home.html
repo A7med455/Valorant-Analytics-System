@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Home</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/CSS/home.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════ -->
+<nav class="navbar">
+
+    <!-- Left side: logo + links -->
+    <div class="nav-left">
+        <a href="/home" class="nav-logo">🎓 ELearn</a>
+        <a href="/courses" class="nav-link">All Courses</a>
+        <a href="/roadmap" class="nav-link">Road Map</a>
+    </div>
+
+    <!-- Right side: profile circle + dropdown -->
+    <div class="nav-right">
+        <div class="profile-wrapper">
+
+            <!-- circle shows first letter of user name -->
+            <div class="profile-circle">
+                <span th:text="${session.name != null ? session.name.substring(0,1) : 'U'}">U</span>
+            </div>
+
+            <!-- dropdown menu -->
+            <div class="dropdown-menu">
+                <a href="/profile">My Profile</a>
+                <a href="/wallet">Account</a>
+                <a href="/profile/my-courses">My Courses</a>
+                <a href="/logout" class="logout-link">Logout</a>
+            </div>
+
+        </div>
+    </div>
+
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     COURSES SECTION
+═══════════════════════════════════════════ -->
+<main class="main-content">
+
+    <h2 class="section-title">Featured Courses</h2>
+
+    <div class="courses-grid">
+
+        <!-- Loop over courses from HomeController -->
+        <div class="course-card" th:each="course : ${courses}">
+            <a th:href="@{/courses/{id}(id=${course.id})}" class="card-link">
+
+                <div class="card-img-wrapper">
+                    <img th:src="${course.imageUrl}"
+                         alt="Course Image"
+                         class="card-img">
+                </div>
+
+                <div class="card-body">
+                    <span class="card-category" th:text="${course.category}">Category</span>
+                    <h3 class="card-title" th:text="${course.title}">Course Title</h3>
+                    <p class="card-instructor"
+                       th:text="'By ' + ${course.createdBy.fname} + ' ' + ${course.createdBy.lname}">
+                        By Instructor
+                    </p>
+                    <p class="card-price" th:text="'EGP ' + ${course.price}">EGP 0</p>
+                </div>
+
+            </a>
+        </div>
+
+    </div>
+
+    <!-- shown if no courses exist yet -->
+    <div class="empty-state" th:if="${#lists.isEmpty(courses)}">
+        <p>No courses available yet. Check back soon!</p>
+    </div>
+
+</main>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="footer">
+    <div class="footer-content">
+        <h3>About Us</h3>
+        <p>ELearn is an online learning platform built to help students
+            grow their skills with expert-led courses anytime, anywhere.</p>
+        <p class="footer-copy">&copy; 2026 ELearn. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+</html>

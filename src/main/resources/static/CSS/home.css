@@ -1,0 +1,312 @@
+/* =============================================
+   IMPORTS
+   ============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/* =============================================
+   RESET
+   ============================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', Arial, sans-serif;
+    background: #f4f6fb;
+    color: #333;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* =============================================
+   NAVBAR
+   ============================================= */
+.navbar {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 0 40px;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.2);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-logo {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 0.5px;
+}
+
+.nav-link {
+    color: rgba(255,255,255,0.88);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: background 0.2s;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.2);
+    color: white;
+}
+
+/* =============================================
+   PROFILE CIRCLE + DROPDOWN
+   ============================================= */
+.nav-right {
+    position: relative;
+}
+
+.profile-wrapper {
+    position: relative;
+}
+
+/* the circle */
+.profile-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: white;
+    color: #667eea;
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: transform 0.2s;
+    user-select: none;
+}
+
+.profile-circle:hover {
+    transform: scale(1.08);
+}
+
+/* dropdown - hidden by default */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 52px;
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    min-width: 160px;
+    overflow: hidden;
+    z-index: 200;
+    animation: fadeDown 0.2s ease;
+}
+
+@keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* show dropdown on hover */
+.profile-wrapper:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 12px 18px;
+    color: #444;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.15s;
+}
+
+.dropdown-menu a:hover {
+    background: #f0f0ff;
+    color: #667eea;
+}
+
+.logout-link {
+    color: #e74c3c !important;
+    border-top: 1px solid #eee;
+}
+
+.logout-link:hover {
+    background: #fff5f5 !important;
+}
+
+/* =============================================
+   MAIN CONTENT
+   ============================================= */
+.main-content {
+    flex: 1;
+    padding: 50px 60px;
+}
+
+.section-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid #667eea;
+    display: inline-block;
+}
+
+/* =============================================
+   COURSE CARDS GRID
+   ============================================= */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 28px;
+}
+
+.course-card {
+    background: white;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    transition: transform 0.25s, box-shadow 0.25s;
+}
+
+.course-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(102,126,234,0.2);
+}
+
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card-img-wrapper {
+    width: 100%;
+    height: 170px;
+    overflow: hidden;
+    background: #e8e8f0;
+}
+
+.card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.course-card:hover .card-img {
+    transform: scale(1.05);
+}
+
+.card-body {
+    padding: 18px;
+}
+
+.card-category {
+    background: #ede9ff;
+    color: #667eea;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 10px 0 6px;
+    color: #222;
+}
+
+.card-instructor {
+    font-size: 13px;
+    color: #888;
+    margin-bottom: 10px;
+}
+
+.card-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #667eea;
+}
+
+/* =============================================
+   EMPTY STATE
+   ============================================= */
+.empty-state {
+    text-align: center;
+    color: #aaa;
+    font-size: 16px;
+    margin-top: 60px;
+}
+
+/* =============================================
+   FOOTER
+   ============================================= */
+.footer {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 40px 60px;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-content h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.footer-content p {
+    font-size: 14px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.7;
+}
+
+.footer-copy {
+    margin-top: 20px;
+    font-size: 12px !important;
+    color: rgba(255,255,255,0.6) !important;
+}
+
+/* =============================================
+   MOBILE
+   ============================================= */
+@media (max-width: 600px) {
+    .navbar {
+        padding: 0 20px;
+    }
+
+    .main-content {
+        padding: 30px 20px;
+    }
+
+    .courses-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer {
+        padding: 30px 20px;
+    }
+}

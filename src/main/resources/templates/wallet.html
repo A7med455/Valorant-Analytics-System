@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Wallet</title>
+</head>
+<body>
+<h1>My Wallet</h1>
+<hr>
+<!--Display Balance-->
+<p> Balance:<span th:text="${balance}"></span>EGP</p>
+<!--top-up form-->
+<h3>Top up Wallet</h3>
+<form action="/wallet/topup" method="post">
+    <label>Enter amount:</label>
+    <input type="number" name="amount" required>
+    <button type="submit"> Top up</button>
+</form>
+</body>
+</html>

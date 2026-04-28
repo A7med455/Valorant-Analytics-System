@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courses</title>
+</head>
+<body>
+<h1>All courses</h1>
+<div th:if="${courses.isEmpty()}">
+    <p> No courses available at this time.</p>
+</div>
+<div th:each="course: ${courses}" style="border:1px solid #ccc; padding:10px; margin: 10px;">
+    <img th:src="${course.imageUrl}" alt="course image" width="200"/>
+    <h2 th:text="${course.title}"></h2>
+    <p th:text="${course.description}"></p>
+    <p><strong>Instructor:</strong></p>
+    <span th:text="${course.createdBy.name}">
+
+    </span>
+<p><strong>Price:</strong>
+    <span th:text="${course.price}"></span>EGP
+</p>
+    <a th:href="@{'/courses/' + ${course.id}}">View details</a>
+</div>
+</body>
+</html>

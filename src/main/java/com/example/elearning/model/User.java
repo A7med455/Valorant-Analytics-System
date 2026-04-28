@@ -1,13 +1,14 @@
 package com.example.elearning.model;
 import jakarta.persistence.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class User {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-private Long Id;
+private long Id;
 private String email;
 private String password;
 private String fname;
@@ -28,7 +29,7 @@ private List <Course> courses=new ArrayList<>();
 public User(){
 }
 
-public User(Long Id,String email,String password, String fname, String lname,String role,Boolean status){
+public User(long Id,String email,String password, String fname, String lname,String role,Boolean status){
     this.Id=Id;
     this.email=email;
     this.password=password;
@@ -50,10 +51,10 @@ public void setEmail(String email){
     public void setPassword(String password){
         this.password=password;
     }
-    public Long getId(){
+    public long getId(){
         return Id;
     }
-    public void setId(Long Id){
+    public void setId(long Id){
         this.Id=Id;
     }
     public String getFname(){

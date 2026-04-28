@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Course Details</title>
+
+</head>
+<body>
+<h1 th:text="${course.title}"> </h1>
+
+<img th:src="${course.imageUrl}" alt="course image" width="300"/>
+
+<p th:text="${course.description}"></p>
+
+<p><strong>Instructor:</strong>
+    <span th:text="${course.createdBy.name}"></span></p>
+
+<p><strong>Price:</strong>
+    <span th:text="${course.price}"></span> EGP
+</p>
+
+<!--buying button(extremely unsure of this sorryy)-->
+<div th:if="${user != null}">
+<form th:action="@{'/purchase/' + ${course.id}}" method="post">
+    <button type="submit">Buy now</button>
+    </form>
+</div>
+<div th:if="${user == null}">
+    <p> <a href="/login">Login to purchase</a>
+
+    </p>
+</div>
+<br>
+<a href="/courses"> ← Back to courses </a>
+</body>
+</html>

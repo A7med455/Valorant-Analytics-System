@@ -22,54 +22,72 @@ public class AdminController {
         this.sessionUser = sessionUser;
     }
 
-    // DASHBOARD
-    // shows all courses + all users to the admin
+    // Dashboard: show all courses and users
     @GetMapping("/dashboard")
-    public String showDashboard(Model model) {
+    public String dashboard(Model model) {
+        // تأكد أن المستخدم أدمن
+        if (!sessionUser.isAdmin()) {
+            return "redirect:/home";
+        }
+        // Fetch all courses and users from services and add to model
         model.addAttribute("courses", courseService.getAllCourses());
         model.addAttribute("users", userService.getAllUsers());
         return "admin/dashboard";
     }
 
-    // ADD COURSE
-    // shows the empty add-course form
+    // Show add course form
     @GetMapping("/add-course")
     public String showAddCourseForm(Model model) {
+        if (!sessionUser.isAdmin()) {
+            return "redirect:/home";
+        }
+
         model.addAttribute("course", new Course());
         return "admin/add-course";
     }
 
-    // handles the form submission → saves new course to DB
+    // Handle add course
     @PostMapping("/add-course")
-    public String handleAddCourse(@ModelAttribute Course course) {
-
-        // the admin who is logged in becomes the instructor (createdBy)
+    public String addCourse(@ModelAttribute Course course) {
+        if (!sessionUser.isAdmin()) {
+            return "redirect:/home";
+        }
+        // ربط الكورس بالأدمن المسجل
         course.setCreatedBy(userService.findById(sessionUser.getUserId()));
         courseService.save(course);
         return "redirect:/admin/dashboard";
     }
 
-    // EDIT COURSE
-    // shows the edit form pre-filled with existing course data
+    // Show edit form
     @GetMapping("/edit-course/{id}")
     public String showEditCourseForm(@PathVariable Long id, Model model) {
-        model.addAttribute("course", courseService.findById(id));
+        if (!sessionUser.isAdmin()) {
+            return "redirect:/home";
+        }
+        Course course = courseService.findById(id);
+        if (course == null) {
+            return "redirect:/admin/dashboard?error=notfound";
+        }
+        model.addAttribute("course", course);
         return "admin/edit-course";
     }
 
-    // handles the edit form submission → updates course in DB
+    // Handle edit
     @PostMapping("/edit-course/{id}")
-    public String handleEditCourse(@PathVariable Long id,
-                                   @ModelAttribute Course course) {
+    public String editCourse(@PathVariable Long id, @ModelAttribute Course course) {
+        if (!sessionUser.isAdmin()) {
+            return "redirect:/home";
+        }
         course.setId(id);
         course.setCreatedBy(userService.findById(sessionUser.getUserId()));
         courseService.save(course);
         return "redirect:/admin/dashboard";
     }
 
-    // DELETE COURSE
+    // Delete course
     @GetMapping("/delete-course/{id}")
     public String deleteCourse(@PathVariable Long id) {
+        if (!sessionUser.isAdmin()) return "redirect:/home";
         courseService.deleteById(id);
         return "redirect:/admin/dashboard";
     }

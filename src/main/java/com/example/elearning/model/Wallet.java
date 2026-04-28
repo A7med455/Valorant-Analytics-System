@@ -8,24 +8,22 @@ public class Wallet {
     @Column(unique = true)
     private long userId;
     private  double balance;
-    public Long getId(){
+    public long getId(){
             return id;}
     public void setId(long id){
         this.id=id;
     }
-    public Long getUserId(){
+    public long getUserId(){
         return userId;}
     public void setUserId(long userId){
         this.userId=userId;
     }
-    public Double getBalance(){
+    public double getBalance(){
         return balance;
     }
-    public void setBalance(Double balance){
+    public void setBalance(double balance){
         this.balance=balance;
     }
-
-
 }
 
 

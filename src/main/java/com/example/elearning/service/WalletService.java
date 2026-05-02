@@ -11,10 +11,10 @@ public class WalletService {
     /* returning the current balance of user
     step1: starting bby finding wallet by userId
     step2:check if the wallet exists or not
-    step3:if wallet doesnt exist return 0
+    step3:if wallet does not exist return 0
     step4: otherwise return balance
      */
-    public Double getBalance(long userId){
+    public Double getBalance(Long userId){
         if (userId==null){
           throw new IllegalArgumentException("user id cannot be null");
         }
@@ -27,11 +27,11 @@ public class WalletService {
     /*next step to add money to the user wallet(the topup function)
     step1:input validations
     step2:find wallet by findByUserId();
-    step3:if wallet not exist start by creating new wallet
+    step3:if wallet does not exist start by creating new wallet
     step4:add the amount
     step5:save it
      */
-    public void topUp(long userId,Double amount){
+    public void topUp(Long userId,Double amount){
         if (userId==null || amount==null){
             throw  new IllegalArgumentException("invalid user id and amount");
         }

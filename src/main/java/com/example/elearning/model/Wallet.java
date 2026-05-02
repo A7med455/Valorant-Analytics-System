@@ -1,28 +1,33 @@
 package com.example.elearning.model;
 import jakarta.persistence.*;
+
 @Entity
+@Table(name = "wallet")
 public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(unique = true)
-    private long userId;
+    private Long id;
+    @Column(name = "userId",unique = true)
+
+    @OneToOne(mappedBy = "wallet")
+    private User user;
     private  double balance;
-    public long getId(){
+    public Long getId(){
             return id;}
-    public void setId(long id){
+    public void setId(Long id){
         this.id=id;
-    }
-    public long getUserId(){
-        return userId;}
-    public void setUserId(long userId){
-        this.userId=userId;
     }
     public double getBalance(){
         return balance;
     }
     public void setBalance(double balance){
         this.balance=balance;
+    }
+    public User getUser(){
+        return user;
+    }
+    public void setUser(User user){
+        this.user=user;
     }
 }
 

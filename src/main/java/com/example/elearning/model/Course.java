@@ -62,10 +62,10 @@ public class Course {
     public void setCreatedBy(User createdBy){
         this.createdBy=createdBy;
     }
-    public User getUser(){
-        return  user;
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
     }
-    public void setUser(User user){
-        this.user=user;
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
     }
 }

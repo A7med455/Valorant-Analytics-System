@@ -10,9 +10,9 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>
 {
     // function for an SQL query to get all enrolled students
     //SELECT * FROM enrollments WHERE user_id = ?
-    List<Enrollment> findByUserId(Long userId);
+    List<Enrollment> findByUser_Id(Long userId);
 
     //SELECT COUNT(*) > 0 FROM enrollments WHERE user_id = ? AND course_id = ?
-    boolean existsByUserIdAndCourseId(Long userId, Long courseId);
+    boolean existsByUser_IdAndCourse_Id(Long userId, Long courseId);
 
 }

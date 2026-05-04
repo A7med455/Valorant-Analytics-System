@@ -54,7 +54,7 @@ public class AdminController {
         }
         // ربط الكورس بالأدمن المسجل
         course.setCreatedBy(userService.findById(sessionUser.getUserId()));
-        courseService.save(course);
+        courseService.upadateCourse(course);
         return "redirect:/admin/dashboard";
     }
 
@@ -64,7 +64,7 @@ public class AdminController {
         if (!sessionUser.isAdmin()) {
             return "redirect:/home";
         }
-        Course course = courseService.findById(id);
+        Course course = courseService.getCourseById(id);
         if (course == null) {
             return "redirect:/admin/dashboard?error=notfound";
         }
@@ -80,7 +80,7 @@ public class AdminController {
         }
         course.setId(id);
         course.setCreatedBy(userService.findById(sessionUser.getUserId()));
-        courseService.save(course);
+        courseService.upadateCourse(course);
         return "redirect:/admin/dashboard";
     }
 
@@ -88,7 +88,7 @@ public class AdminController {
     @GetMapping("/delete-course/{id}")
     public String deleteCourse(@PathVariable Long id) {
         if (!sessionUser.isAdmin()) return "redirect:/home";
-        courseService.deleteById(id);
+        courseService.deleteCourse(id);
         return "redirect:/admin/dashboard";
     }
 }

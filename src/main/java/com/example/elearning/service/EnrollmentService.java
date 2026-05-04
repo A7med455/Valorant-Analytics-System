@@ -2,9 +2,10 @@ package com.example.elearning.service;
 
 import com.example.elearning.model.Course;
 import com.example.elearning.model.Enrollment;
+import com.example.elearning.model.User;
 import com.example.elearning.repository.CourseRepository;
 import com.example.elearning.repository.EnrollmentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.elearning.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -24,18 +25,15 @@ public class EnrollmentService
 
     private final EnrollmentRepository enrollmentRepository;
     private final CourseRepository courseRepository;
+    private final UserRepository userRepository;
     //Constructor injection
-    public EnrollmentService(EnrollmentRepository enrollmentRepository, CourseRepository courseRepository)
+    public EnrollmentService(EnrollmentRepository enrollmentRepository, CourseRepository courseRepository
+    ,UserRepository userRepository)
     {
         this.enrollmentRepository = enrollmentRepository;
         this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
     }
-
-    /*things to do
-        1- handle thrown exceptions
-
-     */
-
     /*
     Returns list of courses the student is enrolled in
      Student opens "My Courses" page
@@ -53,21 +51,17 @@ public class EnrollmentService
             throw new IllegalArgumentException("User ID cannot be null");
         }
         // get all enrollment records for this student
-        List<Enrollment> enrollments = enrollmentRepository.findByUserId(userId);
+        List<Enrollment> enrollments = enrollmentRepository.findByUser_Id(userId);
         // this list will hold the actual course objects
         List<Course> courses = new ArrayList<>();
 
         for(Enrollment e:enrollments)
         {
-            // get the courseId from each enrollment record
-            Long courseId = e.getCourseId();
-            // findById returns Optional<course> to avoid crash if course does not exist
-            Optional<Course> result = courseRepository.findById(courseId);
-            // isPresent() checks if the course still exists in DB before adding it
-            if(result.isPresent())
+            // get object of course from each enrollment record
+            Course course = e.getCourse();
+            if(course != null)
             {
-                //get() gives us the Course
-                courses.add(result.get());
+                courses.add(course);
             }
         }
         return courses;
@@ -86,7 +80,7 @@ public class EnrollmentService
             throw new IllegalArgumentException("User ID and Course ID cannot be null");
         }
         //if UserId and CourseId matches the record in DB return true else false
-        return enrollmentRepository.existsByUserIdAndCourseId(userId, courseId);
+        return enrollmentRepository.existsByUser_IdAndCourse_Id(userId, courseId);
     }
 
     /*
@@ -106,9 +100,21 @@ public class EnrollmentService
             throw new IllegalArgumentException("Student is already enrolled in this course");
         }
         //create a new enrollment record using this class
+        //orElse check if value exists return it else return default assigned value(null)
+        User user = userRepository.findById(userId).orElse(null);
+        if(user == null)
+        {
+            throw new IllegalArgumentException("User not found");
+        }
+        Course course = courseRepository.findById(courseId).orElse(null);
+        if(course == null)
+        {
+            throw new IllegalArgumentException("Course not found");
+        }
+
         Enrollment enrollment = new Enrollment();
-        enrollment.setUserId(userId);
-        enrollment.setCourseId(courseId);
+        enrollment.setUser(user);
+        enrollment.setCourse(course);
         //we use setter from enrollment and record the moment this course was enrolled in
         enrollment.setEnrolledAt(LocalDateTime.now());
         //save data/record to DB

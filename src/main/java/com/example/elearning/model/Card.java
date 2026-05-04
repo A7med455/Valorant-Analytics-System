@@ -18,8 +18,8 @@ public class Card
     private String cardHolderName;
     //store the last 4 digits only for security purposes
     private String lastFourDigits;
-    private String expiryMonth;
-    private String expiryYear;
+    private int expiryMonth;
+    private int expiryYear;
     private String cvv;
 
     //Required by JPA to create objects
@@ -66,22 +66,22 @@ public class Card
         this.lastFourDigits = lastFourDigits;
     }
 
-    public String getExpiryMonth()
+    public int getExpiryMonth()
     {
         return expiryMonth;
     }
 
-    public void setExpiryMonth(String expiryMonth)
+    public void setExpiryMonth(int expiryMonth)
     {
         this.expiryMonth = expiryMonth;
     }
 
-    public String getExpiryYear()
+    public int getExpiryYear()
     {
         return expiryYear;
     }
 
-    public void setExpiryYear(String expiryYear)
+    public void setExpiryYear(int expiryYear)
     {
         this.expiryYear = expiryYear;
     }

@@ -19,6 +19,9 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .nav-left {
@@ -42,14 +45,14 @@ body {
     transition: 0.3s;
 }
 
-.nav-link:hover {
+.nav-link:hover, .active {
     background: #3b82f6;
     color: white;
 }
 
-.nav-link.active {
-    background: #3b82f6;
-    color: white;
+.profile-wrapper {
+    position: relative;
+    cursor: pointer;
 }
 
 .profile-circle {
@@ -62,6 +65,40 @@ body {
     justify-content: center;
     color: white;
     font-weight: bold;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    min-width: 150px;
+    display: none;
+    z-index: 100;
+}
+
+.profile-wrapper:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 10px 20px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.dropdown-menu a:hover {
+    background: #f0f0f0;
+}
+
+.logout-link {
+    color: #e74c3c !important;
+    border-top: 1px solid #eee;
 }
 
 /* Container */
@@ -90,6 +127,25 @@ body {
     margin-top: 0.5rem;
 }
 
+/* Click hint */
+.click-hint {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.click-hint span {
+    background: #e2e8f0;
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+}
+
 /* Grid Layout */
 .roadmap-grid {
     display: grid;
@@ -103,20 +159,35 @@ body {
     border-radius: 24px;
     box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
     overflow: hidden;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    position: relative;
+}
+
+.road-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(59,130,246,0.1), rgba(139,92,246,0.1));
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    border-radius: 24px;
 }
 
 .road-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 20px 30px -12px rgba(0,0,0,0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 25px 35px -12px rgba(0,0,0,0.2);
 }
 
-/* Card Header Colors */
-.card-header {
-    padding: 1.2rem 1.5rem;
-    color: white;
+.road-card:hover::before {
+    opacity: 1;
 }
 
+/* Card Headers with Different Gradients */
 .card-header.frontend {
     background: linear-gradient(135deg, #3b82f6, #8b5cf6);
 }
@@ -129,11 +200,28 @@ body {
     background: linear-gradient(135deg, #ef4444, #f97316);
 }
 
+.card-header {
+    color: white;
+    padding: 1.2rem 1.5rem;
+    transition: all 0.3s;
+}
+
+.road-card:hover .card-header {
+    padding-left: 2rem;
+}
+
 .card-header h2 {
     font-size: 1.5rem;
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+/* External Link Icon */
+.external-icon {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    margin-left: 0.5rem;
 }
 
 .card-body {
@@ -172,6 +260,7 @@ body {
     background: #3b82f6;
     color: white;
     transform: scale(1.05);
+    cursor: default;
 }
 
 hr {
@@ -181,15 +270,98 @@ hr {
     background: #e2e8f0;
 }
 
+/* Button Container */
+.button-container {
+    text-align: center;
+    margin: 3rem 0 2rem;
+}
+
+.roadmap-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    color: white;
+    text-decoration: none;
+    padding: 1rem 2.5rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(59,130,246,0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.roadmap-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(59,130,246,0.4);
+}
+
+.roadmap-btn:active {
+    transform: translateY(1px);
+}
+
 /* Footer */
 .footer {
     background: white;
     text-align: center;
     padding: 1.5rem;
-    margin-top: 3rem;
+    margin-top: 2rem;
     color: #64748b;
     font-size: 0.9rem;
 }
+
+/* Scroll to top button */
+.scroll-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #3b82f6;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    z-index: 99;
+}
+
+.scroll-top.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-top:hover {
+    background: #2563eb;
+    transform: translateY(-3px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.road-card {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+.road-card:nth-child(1) { animation-delay: 0.1s; }
+.road-card:nth-child(2) { animation-delay: 0.2s; }
+.road-card:nth-child(3) { animation-delay: 0.3s; }
 
 /* Responsive */
 @media (max-width: 700px) {
@@ -203,5 +375,16 @@ hr {
 
     .roadmap-header h1 {
         font-size: 1.8rem;
+    }
+
+    .scroll-top {
+        bottom: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+    }
+
+    .card-header h2 {
+        font-size: 1.2rem;
     }
 }

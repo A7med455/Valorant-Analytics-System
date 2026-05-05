@@ -1,12 +1,16 @@
 package com.example.elearning.service;
+import com.example.elearning.model.User;
 import com.example.elearning.model.Wallet;
+import com.example.elearning.repository.UserRepository;
 import com.example.elearning.repository.WalletRepository;
 import org.springframework.stereotype.Service;
 @Service
 public class WalletService {
     private  final WalletRepository walletRepository;
-    public WalletService(WalletRepository walletRepository){
+    private final UserRepository userRepository;
+    public WalletService(WalletRepository walletRepository,UserRepository userRepository){
         this.walletRepository=walletRepository;
+        this.userRepository=userRepository;
     }
     /* returning the current balance of user
     step1: starting bby finding wallet by userId
@@ -18,7 +22,7 @@ public class WalletService {
         if (userId==null){
           throw new IllegalArgumentException("user id cannot be null");
         }
-        Wallet wallet=walletRepository.findByUserId(userId);
+        Wallet wallet=walletRepository.findByUser_Id(userId);
         if (wallet==null){
             return 0.0;
         }
@@ -38,11 +42,13 @@ public class WalletService {
         if (amount<=0){
             throw new IllegalArgumentException("amount must be greater than zero");
         }
-        /*find wallet first*/
-        Wallet wallet=walletRepository.findByUserId(userId);
+
+        User user=userRepository.findById(userId).orElseThrow(()-> new IllegalArgumentException("user not found"+userId));
+        /*find wallet first edit it to check inside a function*/
+        Wallet wallet=walletRepository.findByUser_Id(userId);
         if (wallet==null){
             wallet=new Wallet();   /*create new wallet */
-            wallet.setUserId(userId);
+            wallet.setUser(user);
             wallet.setBalance(0.0);
         }
         wallet.setBalance(wallet.getBalance()+amount);    /*add the amount to the existing balance*/

@@ -7,9 +7,9 @@ public class Wallet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "userId",unique = true)
 
-    @OneToOne(mappedBy = "wallet")
+    @OneToOne
+    @JoinColumn(name = "user_Id",unique = true)
     private User user;
     private  double balance;
     public Long getId(){

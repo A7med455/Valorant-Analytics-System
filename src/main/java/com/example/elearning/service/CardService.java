@@ -67,7 +67,7 @@ public class CardService
         }
     }
 
-    public void saveCard(Long userId, Card card,String fullCardNumber)
+    public void saveCard(Long userId, Card card,String fullCardNumber,Double initialBalance)
     {
         User user=userRepository.findById(userId).orElse(null);
         if(user==null)
@@ -79,13 +79,44 @@ public class CardService
         {
             throw new IllegalArgumentException("Full Card Number must be 16 digits");
         }
+        if(initialBalance==null || initialBalance<0)
+        {
+            throw new IllegalArgumentException("Initial Balance cannot be negative");
+        }
         //save last 4 digits
         String lastFourDigit = fullCardNumber.substring(12);
 
         card.setUser(user);
         card.setLastFourDigits(lastFourDigit);
+        card.setBalance(initialBalance);
         cardRepository.save(card);
     }
+
+    public void deductFromCard(Long userId, Double amount)
+    {
+        if(userId == null)
+        {
+            throw new IllegalArgumentException("UserId cannot be null");
+        }
+        if(amount == null || amount <= 0)
+        {
+            throw new IllegalArgumentException("Amount must be greater than 0");
+        }
+        Card card = cardRepository.findByUser_Id(userId);
+        if(card==null)
+        {
+            throw new IllegalArgumentException("Card not found for this user");
+        }
+
+        if(card.getBalance()==null || card.getBalance()<amount)
+        {
+            throw new IllegalArgumentException("Insufficient card balance. Available: "
+                + card.getBalance() + " EGP");
+        }
+        card.setBalance(card.getBalance()-amount);
+        cardRepository.save(card);
+    }
+
 
     public Card getCardByUser(Long userId)
     {

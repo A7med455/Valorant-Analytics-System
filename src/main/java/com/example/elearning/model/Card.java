@@ -21,6 +21,7 @@ public class Card
     private int expiryMonth;
     private int expiryYear;
     private String cvv;
+    private Double balance;
 
     //Required by JPA to create objects
     public Card()
@@ -94,6 +95,16 @@ public class Card
     public void setCvv(String cvv)
     {
         this.cvv = cvv;
+    }
+
+    public Double getBalance()
+    {
+        return balance;
+    }
+
+    public void setBalance(Double balance)
+    {
+        this.balance = balance;
     }
 
 

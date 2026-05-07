@@ -1,13 +1,16 @@
 package com.example.elearning.controller;
 
 import com.example.elearning.model.User;
+import com.example.elearning.service.CookieService;
 import com.example.elearning.service.UserService;
 import com.example.elearning.session.SessionUser;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /*
  1- Get /login  show login page
@@ -26,12 +29,13 @@ public class AuthController
 {
     private final UserService userService;//  check on business logic
     private final SessionUser sessionUser; //  opens session for the logged in user
-
-    //dependency injection
-    public AuthController( UserService userService ,SessionUser sessionUser)
+    private final CookieService cookieService;
+    //Constructor injection
+    public AuthController( UserService userService ,SessionUser sessionUser,CookieService cookieService)
     {
         this.userService = userService;
         this.sessionUser = sessionUser;
+        this.cookieService = cookieService;
     }
 
     @GetMapping("/") //forward user to login to check if he has an account or not
@@ -66,8 +70,9 @@ public class AuthController
         return "login";
     }
 
+    //if user doesn't check the box rememberMe should be false to avoid null
     @PostMapping("/login")
-    public String handleLogin(@ModelAttribute User user, Model model)
+    public String handleLogin(@ModelAttribute User user, Model model, @RequestParam(required = false) String rememberMe,HttpServletResponse response)
     {
         //check if input is not empty
         if(user.getEmail() == null || user.getEmail().isEmpty()
@@ -86,11 +91,17 @@ public class AuthController
             model.addAttribute("error", "Invalid email or password");
             return "login";
         }
+
         // Create Session
         sessionUser.setUserId(foundUser.getId());
         sessionUser.setName(foundUser.getFname() + " " + foundUser.getLname());
         sessionUser.setRole(foundUser.getRole());
 
+        //RememberMe equals "on" means check box is checked
+        if(rememberMe!=null && rememberMe.equals("on"))
+        {
+            cookieService.createRememberMeCookie(foundUser.getEmail(),response);
+        }
         if (foundUser.getRole().equals("ADMIN"))
         {
             return "redirect:/admin/dashboard";
@@ -144,9 +155,10 @@ public class AuthController
     }
 
     @GetMapping("/logout")
-    public String handleLogout()
+    public String handleLogout(HttpServletResponse response)
     {
         sessionUser.clear(); // destroy session
+        cookieService.clearRememberMeCookie(response);
         return "redirect:/login";
     }
 }

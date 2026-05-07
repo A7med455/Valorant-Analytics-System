@@ -1,5 +1,6 @@
 package com.example.elearning.controller;
 
+import com.example.elearning.service.EnrollmentService;
 import org.springframework.ui.Model;
 import com.example.elearning.model.Course;
 import com.example.elearning.service.CourseService;
@@ -17,9 +18,11 @@ import java.util.Map;
 public class CourseController {
     private final CourseService courseService;
     private final SessionUser sessionUser;
+    private final EnrollmentService enrollmentService;
 
-    public CourseController(CourseService courseService, SessionUser sessionUser){
+    public CourseController(CourseService courseService, SessionUser sessionUser, EnrollmentService enrollmentService){
         this.courseService=courseService;
+        this.enrollmentService=enrollmentService;
         this.sessionUser=sessionUser;
     }
 
@@ -40,6 +43,13 @@ public class CourseController {
         model.addAttribute("sessionUser", sessionUser);
         return "course-detail";
     }
+    @GetMapping("/my-courses")
+    public String showMyCourses(Model model){
+        List<Course> myCourses=enrollmentService.getEnrolledCourses(sessionUser.getUserId());
+        model.addAttribute("myCourses",myCourses);
+        model.addAttribute("sessionUser",sessionUser);
+        return "my-courses";
+    }
     @GetMapping("/roadmap")
     public String showRoadmap(Model model) {
         List<Course> allCourses = courseService.getAllCourses();
@@ -55,7 +65,6 @@ public class CourseController {
         model.addAttribute("sessionUser", sessionUser);
         return "roadmap";
     }
-
 
 
 }

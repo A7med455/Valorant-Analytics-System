@@ -18,12 +18,14 @@ public class PurchaseService {
     private final CourseRepository courseRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final UserRepository userRepository;
+    private final TransactionService transactionService;
 
-    public PurchaseService(EnrollmentRepository enrollmentRepository, WalletRepository walletRepository, CourseRepository courseRepository,UserRepository userRepository) {
+    public PurchaseService(EnrollmentRepository enrollmentRepository, WalletRepository walletRepository, CourseRepository courseRepository,UserRepository userRepository,TransactionService transactionService) {
         this.enrollmentRepository = enrollmentRepository;
         this.walletRepository = walletRepository;
         this.courseRepository = courseRepository;
         this.userRepository=userRepository;
+        this.transactionService=transactionService;
     }
 
     public void purchaseCourse(Long userId, Long courseId){
@@ -64,7 +66,7 @@ public class PurchaseService {
         enrollment.setEnrolledAt(LocalDateTime.now());
         enrollmentRepository.save(enrollment);
 
-//return success
+        transactionService.saveTransaction(userId, "purchase", -price, "Purchased: " + course.getTitle());
 
     }
 }

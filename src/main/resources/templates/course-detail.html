@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Course Details</title>
+</head>
+<body>
+<h1 th:text="${course.title}"></h1>
+<img th:src="${course.imageUrl}" alt="course image" width="300"/>
+<p th:text="${course.description}"></p>
+<p><strong>Instructor:</strong>
+    <span th:text="${course.createdBy.fname} + ' ' + ${course.createdBy.lname}"></span>
+</p>
+<p><strong>Price:</strong>
+    <span th:text="${course.price}"></span> EGP
+</p>
+<div th:if="${sessionUser.isLoggedIn()}">
+    <form th:action="@{'/purchase/' + ${course.id}}" method="post">
+        <button type="submit">Buy now</button>
+    </form>
+</div>
+<div th:unless="${sessionUser.isLoggedIn()}">
+    <p><a href="/login">Login to purchase</a></p>
+</div>
+<br>
+<a href="/courses"> ← Back to courses</a>
+</body>
+</html>

@@ -10,8 +10,8 @@ import java.util.Optional;
 @Service
 public class CourseService {
     private final CourseRepository courseRepository;
-
     public CourseService(CourseRepository courseRepository){
+
         this.courseRepository = courseRepository;
     }
 
@@ -28,7 +28,7 @@ public Course addCourse(Course course){
         return courseRepository.save(course);
 }
 
-public Course upadateCourse(Course course){
+public Course updateCourse(Course course){
         return courseRepository.save(course);
 }
 public void deleteCourse(Long id){

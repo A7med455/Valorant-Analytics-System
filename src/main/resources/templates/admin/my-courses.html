@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Courses</title>
+    <link rel="stylesheet" th:href="@{/CSS/style.css}">
+</head>
+<body>
+
+<h1>My Courses</h1>
+
+<div id="courses-container">
+
+    <p th:if="${#lists.isEmpty(courses)}">No enrolled courses yet.</p>
+
+    <div th:each="course : ${courses}" class="course-card">
+        <img th:src="${course.imageUrl}" th:alt="${course.title}" width="250">
+        <h3 th:text="${course.title}"></h3>
+        <p>Category: <span th:text="${course.category}"></span></p>
+        <a th:href="@{/watch-lesson(course_id=${course.id})}">Watch Lessons</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <link rel="stylesheet" th:href="@{/CSS/style.css}">
+</head>
+<body>
+<!--navigation bar-->
+<nav>
+    <a th:href="@{/home}">Home</a>
+    <a th:href="@{/courses}">Courses</a>
+    <a th:href="@{/roadmap}">Roadmap</a>
+    <a th:if="${sessionUser.isLoggedIn()}" th:href="@{/profile}">Profile</a>
+    <a th:if="${sessionUser.isLoggedIn()}" th:href="@{/wallet}">Wallet</a>
+    <a th:if="${sessionUser.isLoggedIn()}" th:href="@{/logout}">Logout</a>
+    <a th:unless="${sessionUser.isLoggedIn()}" th:href="@{/login}">Login</a>
+    <span th:if="${sessionUser.isLoggedIn()}" th:text="${sessionUser.name}"></span>
+</nav>
+<div class="container">
+    <h1>All Courses</h1>
+    <p th:if="${#lists.isEmpty(courses)}">No courses available yet.</p>
+    <div class="course-grid">
+        <div class="course-card" th:each="course : ${courses}">
+            <img th:src="${course.imageUrl}" th:alt="${course.title}" class="course-img"/>
+            <div class="course-info">
+                <h2 th:text="${course.title}">Course Title</h2>
+                <p class="course-desc" th:text="${course.description}">Description</p>
+                <span class="badge" th:text="${course.category}">Category</span>
+                <p class="price" th:text="'$' + ${course.price}">$0.00</p>
+                <p class="instructor"
+                   th:text="'By ' + ${course.createdBy.fname} + ' ' + ${course.createdBy.lname}">
+                    By Instructor
+                </p>
+                <a th:href="@{/courses/{id}(id=${course.id})}" class="btn">View Course</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

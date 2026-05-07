@@ -18,13 +18,14 @@ private String fname;
 private String lname;
 private String role;
 private Boolean status;
+private int age;
 
-//a user can enroll in many courses
+    //a user can enroll in many courses
 @OneToMany(mappedBy = "user")
     private List<Enrollment> enrollment=new ArrayList<>();
 
 //a user can have many courses
-@OneToMany(mappedBy = "user")
+@OneToMany(mappedBy = "createdBy")
 private List <Course> createdcourses=new ArrayList<>();
 
 //each user have one wallet
@@ -68,12 +69,13 @@ public void setEmail(String email){
         this.lname=lname;
     }
 
-    public String getRole(){
-        return role;
-    }
+    public String getRole(){return role;}
     public void setRole(String role){
         this.role=role;
     }
+
+    public void setAge(int age) {this.age = age;}
+    public int getAge() {return age;}
 
     public Boolean getStatus(){
         return status;

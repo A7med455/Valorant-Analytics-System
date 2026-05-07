@@ -7,6 +7,7 @@ import com.example.elearning.session.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import com.example.elearning.repository.CourseRepository;
 
 @Controller
 @RequestMapping("/admin")
@@ -54,7 +55,7 @@ public class AdminController {
         }
         // ربط الكورس بالأدمن المسجل
         course.setCreatedBy(userService.findById(sessionUser.getUserId()));
-        courseService.upadateCourse(course);
+        courseService.updateCourse(course);
         return "redirect:/admin/dashboard";
     }
 
@@ -80,7 +81,7 @@ public class AdminController {
         }
         course.setId(id);
         course.setCreatedBy(userService.findById(sessionUser.getUserId()));
-        courseService.upadateCourse(course);
+        courseService.updateCourse(course);
         return "redirect:/admin/dashboard";
     }
 

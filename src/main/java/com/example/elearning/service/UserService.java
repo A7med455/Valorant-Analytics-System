@@ -3,6 +3,8 @@ package com.example.elearning.service;
 import com.example.elearning.model.User;
 import com.example.elearning.model.Wallet;
 import com.example.elearning.repository.UserRepository;
+import com.example.elearning.repository.WalletRepository;
+import com.example.elearning.model.Wallet;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +13,12 @@ import java.util.Optional;
 
 @Service
 public class UserService {
-    private final UserService userService;
     private final UserRepository userRepository;
+    private  final WalletRepository walletRepository;
 
-    public UserService(UserService userService, UserRepository userRepository) {
-        this.userService = userService;
+    public UserService(UserRepository userRepository , WalletRepository walletRepository, WalletRepository walletRepository1) {
         this.userRepository = userRepository;
+        this.walletRepository = walletRepository1;
     }
 
     //======================================//

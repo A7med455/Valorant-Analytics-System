@@ -10,3 +10,4 @@ public interface WalletRepository extends JpaRepository<Wallet, Long> {
     // Used in WalletService.getBalance() and WalletService.topUp()
     // Traverses Wallet → user → Id via JPA derived query
     Wallet findByUser_Id(Long userId);
+}

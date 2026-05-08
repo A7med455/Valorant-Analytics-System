@@ -46,7 +46,7 @@ public class WalletController {
         model.addAttribute("balance", balance);
         model.addAttribute("name", sessionUser.getName());
         model.addAttribute("card", card);
-        model.addAttribute("transcations", transactions);
+        model.addAttribute("transactions", transactions);
         return "wallet";
     }
 

@@ -45,8 +45,15 @@ public class CourseController {
     }
     @GetMapping("/my-courses")
     public String showMyCourses(Model model){
-        List<Course> myCourses=enrollmentService.getEnrolledCourses(sessionUser.getUserId());
-        model.addAttribute("myCourses",myCourses);
+        if(!sessionUser.isLoggedIn()){
+            return "redirect:/login";
+        }
+    try {
+        List<Course> myCourses = enrollmentService.getEnrolledCourses(sessionUser.getUserId());
+        model.addAttribute("myCourses", myCourses);
+    } catch(IllegalArgumentException e){
+        model.addAttribute("error",e.getMessage());
+    }
         model.addAttribute("sessionUser",sessionUser);
         return "my-courses";
     }

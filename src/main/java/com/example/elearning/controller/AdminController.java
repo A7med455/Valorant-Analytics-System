@@ -7,7 +7,7 @@ import com.example.elearning.session.SessionUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.example.elearning.repository.CourseRepository;
+
 
 @Controller
 @RequestMapping("/admin")
@@ -48,14 +48,20 @@ public class AdminController {
     }
 
     // Handle add course
+// Handle add course
     @PostMapping("/add-course")
-    public String addCourse(@ModelAttribute Course course) {
+    public String addCourse(@ModelAttribute Course course, Model model) {
         if (!sessionUser.isAdmin()) {
             return "redirect:/home";
         }
-        // ربط الكورس بالأدمن المسجل
-        course.setCreatedBy(userService.findById(sessionUser.getUserId()));
-        courseService.updateCourse(course);
+        try {
+            course.setCreatedBy(userService.findById(sessionUser.getUserId()));
+            courseService.updateCourse(course);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("course", course);
+            return "admin/add-course";
+        }
         return "redirect:/admin/dashboard";
     }
 
@@ -75,13 +81,19 @@ public class AdminController {
 
     // Handle edit
     @PostMapping("/edit-course/{id}")
-    public String editCourse(@PathVariable Long id, @ModelAttribute Course course) {
+    public String editCourse(@PathVariable Long id, @ModelAttribute Course course, Model model) {
         if (!sessionUser.isAdmin()) {
             return "redirect:/home";
         }
-        course.setId(id);
-        course.setCreatedBy(userService.findById(sessionUser.getUserId()));
-        courseService.updateCourse(course);
+        try {
+            course.setId(id);
+            course.setCreatedBy(userService.findById(sessionUser.getUserId()));
+            courseService.updateCourse(course);
+        } catch (IllegalArgumentException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("course", course);
+            return "admin/edit-course";
+        }
         return "redirect:/admin/dashboard";
     }
 
@@ -89,7 +101,11 @@ public class AdminController {
     @GetMapping("/delete-course/{id}")
     public String deleteCourse(@PathVariable Long id) {
         if (!sessionUser.isAdmin()) return "redirect:/home";
-        courseService.deleteCourse(id);
+        try {
+            courseService.deleteCourse(id);
+        } catch (Exception e) {
+            return "redirect:/admin/dashboard";
+        }
         return "redirect:/admin/dashboard";
     }
 }

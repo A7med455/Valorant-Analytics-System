@@ -15,4 +15,5 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Long>
     //SELECT COUNT(*) > 0 FROM enrollments WHERE user_id = ? AND course_id = ?
     boolean existsByUser_IdAndCourse_Id(Long userId, Long courseId);
 
+    List<Enrollment> findByCourse_Id(Long courseId);
 }

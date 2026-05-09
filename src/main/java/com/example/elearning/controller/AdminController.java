@@ -1,6 +1,10 @@
 package com.example.elearning.controller;
 
 import com.example.elearning.model.Course;
+import com.example.elearning.model.Enrollment;
+import com.example.elearning.model.Lesson;
+import com.example.elearning.repository.EnrollmentRepository;
+import com.example.elearning.repository.LessonRepository;
 import com.example.elearning.service.CourseService;
 import com.example.elearning.service.LessonService;
 import com.example.elearning.service.UserService;
@@ -10,6 +14,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -18,13 +24,18 @@ public class AdminController {
     private final UserService userService;
     private final SessionUser sessionUser;
     private final LessonService lessonService;
+    private final LessonRepository lessonRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     public AdminController(CourseService courseService, UserService userService,
-                           SessionUser sessionUser, LessonService lessonService) {
+                           SessionUser sessionUser, LessonService lessonService,
+                           LessonRepository lessonRepository, EnrollmentRepository enrollmentRepository) {
         this.courseService = courseService;
         this.userService = userService;
         this.sessionUser = sessionUser;
         this.lessonService = lessonService;
+        this.lessonRepository = lessonRepository;
+        this.enrollmentRepository = enrollmentRepository;
     }
 
     // Dashboard: show all courses and users
@@ -99,10 +110,20 @@ public class AdminController {
     }
 
     // Delete course
+    // Delete course
     @GetMapping("/delete-course/{id}")
     public String deleteCourse(@PathVariable Long id) {
         if (!sessionUser.isAdmin()) return "redirect:/home";
         try {
+            // Delete enrollments for this course
+            List<Enrollment> enrollments = enrollmentRepository.findByCourse_Id(id);
+            enrollmentRepository.deleteAll(enrollments);
+
+            // Delete lessons for this course
+            List<Lesson> lessons = lessonService.getLessonsByCourse(id);
+            lessonRepository.deleteAll(lessons);
+
+            // Delete the course
             courseService.deleteCourse(id);
         } catch (Exception e) {
             return "redirect:/admin/dashboard";

@@ -7,6 +7,7 @@
 <body>
 <a href="/logout" style="color: red; float: right; margin: 10px;">Logout</a>
 <a href="/home" style="margin: 10px;">← Home</a>
+
 <h1 th:text="${course.title}"></h1>
 <img th:src="${course.imageUrl}" alt="course image" width="300"/>
 <p th:text="${course.description}"></p>
@@ -16,18 +17,26 @@
 <p><strong>Price:</strong>
     <span th:text="${course.price}"></span> EGP
 </p>
+
 <div th:if="${sessionUser.isLoggedIn()}">
     <form th:action="@{'/purchase/' + ${course.id}}" method="post">
         <button type="submit">Buy now</button>
     </form>
 </div>
+
 <!-- Lessons Section -->
-<div th:if="${lessons != null and !lessons.isEmpty()}" style="margin-top: 30px;">
+<div th:if="${lessons != null and !#lists.isEmpty(lessons)}" style="margin-top: 30px;">
     <h3>Course Lessons</h3>
     <div th:each="lesson : ${lessons}" style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
         <h4 th:text="${lesson.title}"></h4>
         <div th:if="${lesson.videoUrl != null}">
             <a th:href="${lesson.videoUrl}" target="_blank">Watch Video (External Link)</a>
+        </div>
+        <div th:if="${lesson.videoData != null}">
+            <video width="400" controls>
+                <source th:src="@{'/lesson/' + ${lesson.id} + '/video'}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
         </div>
     </div>
 </div>
@@ -35,11 +44,12 @@
 <div th:if="${lessons == null or #lists.isEmpty(lessons)}">
     <p>No lessons added yet for this course.</p>
 </div>
+
 <div th:unless="${sessionUser.isLoggedIn()}">
     <p><a href="/login">Login to purchase</a></p>
 </div>
+
 <br>
 <a href="/courses"> ← Back to courses</a>
 </body>
-
 </html>

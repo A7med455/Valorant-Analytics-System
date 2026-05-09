@@ -1,7 +1,11 @@
 package com.example.elearning.controller;
 
+import com.example.elearning.model.Lesson;
 import com.example.elearning.service.EnrollmentService;
 import com.example.elearning.service.LessonService;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import com.example.elearning.model.Course;
 import com.example.elearning.service.CourseService;
@@ -76,6 +80,20 @@ public class CourseController {
         model.addAttribute("coursesByCategory", coursesByCategory);
         model.addAttribute("sessionUser", sessionUser);
         return "roadmap";
+    }
+    @GetMapping("/lesson/{lessonId}/video")
+    public ResponseEntity<byte[]> streamVideo(@PathVariable Long lessonId) {
+        Lesson lesson = lessonService.getLessonById(lessonId);
+        if (lesson == null || lesson.getVideoData() == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        HttpHeaders headers = new HttpHeaders();
+        String contentType = lesson.getVideoType() != null ? lesson.getVideoType() : "video/mp4";
+        headers.setContentType(MediaType.parseMediaType(contentType));
+        headers.setContentDispositionFormData("inline", lesson.getVideoName());
+
+        return ResponseEntity.ok().headers(headers).body(lesson.getVideoData());
     }
 
 

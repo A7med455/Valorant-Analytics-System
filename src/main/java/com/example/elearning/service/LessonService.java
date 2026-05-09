@@ -86,6 +86,13 @@ public class LessonService
         lessonRepository.save(lesson);
     }
 
+    public Lesson getLessonById(Long lessonId) {
+        if (lessonId == null) {
+            throw new IllegalArgumentException("Lesson ID cannot be null");
+        }
+        return lessonRepository.findById(lessonId).orElse(null);
+    }
+
     public List<Lesson> getLessonsByCourse(Long courseId)
     {
         if(courseId==null)

@@ -24,7 +24,7 @@ public class AdminController {
     }
 
     // Dashboard: show all courses and users
-    @GetMapping("/admin/dashboard")
+    @GetMapping("/dashboard")
     public String dashboard(Model model) {
         // تأكد أن المستخدم أدمن
         if (!sessionUser.isAdmin()) {
@@ -33,7 +33,7 @@ public class AdminController {
         // Fetch all courses and users from services and add to model
         model.addAttribute("courses", courseService.getAllCourses());
         model.addAttribute("users", userService.getAllUsers());
-        return "admin/dashboard";
+        return "admin/dashboard.html";
     }
 
     // Show add course form
@@ -62,7 +62,7 @@ public class AdminController {
             model.addAttribute("course", course);
             return "admin/add-course";
         }
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/dashboard.html";
     }
 
     // Show edit form
@@ -94,7 +94,7 @@ public class AdminController {
             model.addAttribute("course", course);
             return "admin/edit-course";
         }
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/dashboard.html";
     }
 
     // Delete course
@@ -104,8 +104,8 @@ public class AdminController {
         try {
             courseService.deleteCourse(id);
         } catch (Exception e) {
-            return "redirect:/admin/dashboard";
+            return "redirect:/admin/dashboard.html";
         }
-        return "redirect:/admin/dashboard";
+        return "redirect:/admin/dashboard.html";
     }
 }

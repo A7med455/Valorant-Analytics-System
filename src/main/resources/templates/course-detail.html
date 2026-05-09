@@ -21,6 +21,20 @@
         <button type="submit">Buy now</button>
     </form>
 </div>
+<!-- Lessons Section -->
+<div th:if="${lessons != null and !lessons.isEmpty()}" style="margin-top: 30px;">
+    <h3>Course Lessons</h3>
+    <div th:each="lesson : ${lessons}" style="border: 1px solid #ccc; padding: 10px; margin: 10px 0;">
+        <h4 th:text="${lesson.title}"></h4>
+        <div th:if="${lesson.videoUrl != null}">
+            <a th:href="${lesson.videoUrl}" target="_blank">Watch Video (External Link)</a>
+        </div>
+    </div>
+</div>
+
+<div th:if="${lessons == null or #lists.isEmpty(lessons)}">
+    <p>No lessons added yet for this course.</p>
+</div>
 <div th:unless="${sessionUser.isLoggedIn()}">
     <p><a href="/login">Login to purchase</a></p>
 </div>

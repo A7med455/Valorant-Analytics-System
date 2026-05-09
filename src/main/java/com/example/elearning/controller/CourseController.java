@@ -1,6 +1,7 @@
 package com.example.elearning.controller;
 
 import com.example.elearning.service.EnrollmentService;
+import com.example.elearning.service.LessonService;
 import org.springframework.ui.Model;
 import com.example.elearning.model.Course;
 import com.example.elearning.service.CourseService;
@@ -19,11 +20,14 @@ public class CourseController {
     private final CourseService courseService;
     private final SessionUser sessionUser;
     private final EnrollmentService enrollmentService;
+    private final LessonService lessonService;
 
-    public CourseController(CourseService courseService, SessionUser sessionUser, EnrollmentService enrollmentService){
+    public CourseController(CourseService courseService, SessionUser sessionUser, EnrollmentService enrollmentService,
+                            LessonService lessonService){
         this.courseService=courseService;
         this.enrollmentService=enrollmentService;
         this.sessionUser=sessionUser;
+        this.lessonService=lessonService;
     }
 
     @GetMapping("/courses")
@@ -34,13 +38,14 @@ public class CourseController {
         return "courses";
     }
     @GetMapping("/courses/{id}")
-    public String ShowCourseDetail(@PathVariable Long id, Model model){
+    public String showCourseDetail(@PathVariable Long id, Model model){
         Course course = courseService.getCourseById(id);
         if(course==null){
             return "redirect:/courses";
         }
         model.addAttribute("course", course);
         model.addAttribute("sessionUser", sessionUser);
+        model.addAttribute("lessons", lessonService.getLessonsByCourse(id));  // ← ADD
         return "course-detail";
     }
     @GetMapping("/my-courses")

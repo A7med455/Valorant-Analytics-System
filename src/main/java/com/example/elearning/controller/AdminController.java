@@ -24,7 +24,7 @@ public class AdminController {
     }
 
     // Dashboard: show all courses and users
-    @GetMapping("/dashboard")
+    @GetMapping("/admin/dashboard")
     public String dashboard(Model model) {
         // تأكد أن المستخدم أدمن
         if (!sessionUser.isAdmin()) {

@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+:root {
+    --bg-primary:   #0B0E16;
+    --bg-card:      #141820;
+    --bg-elevated:  #1D2236;
+    --bg-input:     #191D2C;
+    --bg-hover:     #222840;
+    --accent:         #0CF2A8;
+    --accent-dim:     rgba(12, 242, 168, 0.12);
+    --accent-hover:   #00D890;
+    --accent-warm:    #FF7A3D;
+    --accent-warm-dim:rgba(255, 122, 61, 0.12);
+    --text-primary:   #EEF0F8;
+    --text-secondary: #8B91A8;
+    --text-muted:     #4E5570;
+    --danger:     #FF3D5A;
+    --danger-dim: rgba(255, 61, 90, 0.12);
+    --success:    #0CF2A8;
+    --warning:    #FFB547;
+    --border:          rgba(255, 255, 255, 0.07);
+    --border-accent:   rgba(12, 242, 168, 0.25);
+    --radius-sm:  6px;
+    --radius-md:  12px;
+    --radius-lg:  18px;
+    --shadow-sm:  0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md:  0 8px 32px rgba(0,0,0,0.45);
+    --shadow-lg:  0 20px 60px rgba(0,0,0,0.6);
+    --shadow-accent: 0 0 24px rgba(12,242,168,0.18);
+    --font-heading: 'Syne', sans-serif;
+    --font-body:    'DM Sans', sans-serif;
+    --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    --duration: 220ms;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background-color: var(--bg-primary); color: var(--text-primary); line-height: 1.6; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+
+/* WALLET.CSS — Add link to HTML: <link rel="stylesheet" href="/CSS/wallet.css"> */
+body { max-width:760px; margin:0 auto; padding:60px 40px; animation:fadeIn 0.4s var(--ease) both; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+h2 { font-family:var(--font-heading); font-size:1.8rem; font-weight:800; color:var(--text-primary); letter-spacing:-0.03em; margin-bottom:32px; }
+h3 { font-family:var(--font-heading); font-size:0.78rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:14px; margin-top:32px; }
+p { font-size:0.95rem; color:var(--text-secondary); line-height:1.6; margin-bottom:8px; }
+form { background:var(--bg-card); border:1px solid var(--border); border-radius:var(--radius-md); padding:24px; margin:16px 0 24px; }
+form label { display:flex; flex-direction:column; gap:10px; font-size:0.825rem; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.06em; }
+form input[type="number"] { background:var(--bg-input); border:1px solid var(--border); border-radius:var(--radius-sm); color:var(--text-primary); font-family:var(--font-body); font-size:1rem; padding:12px 16px; outline:none; width:100%; transition:border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease); }
+form input[type="number"]:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-dim); }
+button[type="submit"] { margin-top:16px; background:var(--accent); color:#0B0E16; border:none; border-radius:var(--radius-sm); font-family:var(--font-heading); font-size:0.95rem; font-weight:700; padding:12px 28px; cursor:pointer; transition:background var(--duration) var(--ease), transform var(--duration) var(--ease); display:inline-block; }
+button[type="submit"]:hover { background:var(--accent-hover); transform:translateY(-1px); }
+a button { background:transparent; color:var(--accent); border:1px solid var(--border-accent); border-radius:var(--radius-sm); font-family:var(--font-body); font-size:0.9rem; font-weight:600; padding:12px 28px; cursor:pointer; transition:background var(--duration) var(--ease); }
+a button:hover { background:var(--accent-dim); }
+a { color:var(--accent); text-decoration:none; display:inline-block; }
+hr { border:none; border-top:1px solid var(--border); margin:20px 0; }
+@media (max-width:600px) { body { padding:32px 20px; } }
+:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }

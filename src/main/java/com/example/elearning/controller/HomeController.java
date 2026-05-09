@@ -35,7 +35,7 @@ public class HomeController {
         List<Course> courses = courseService.getAllCourses();
         model.addAttribute("courses", courses);
         model.addAttribute("sessionUser", sessionUser);
-        return "home";
+        return "Home";
     }
 
     @GetMapping("/profile")

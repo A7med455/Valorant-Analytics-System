@@ -23,7 +23,7 @@
                 using session obj created in authController
             -->
             <div class="profile-circle">
-                <span th:text="${sessionUser.name.substring(0,1)}">U</span>
+                <span th:text="${sessionUser.name != null ? sessionUser.name.substring(0,1) : 'U'}">U</span>
             </div>
 
             <!-- dropdown -->

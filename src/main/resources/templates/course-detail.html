@@ -5,6 +5,8 @@
     <title>Course Details</title>
 </head>
 <body>
+<a href="/logout" style="color: red; float: right; margin: 10px;">Logout</a>
+<a href="/home" style="margin: 10px;">← Home</a>
 <h1 th:text="${course.title}"></h1>
 <img th:src="${course.imageUrl}" alt="course image" width="300"/>
 <p th:text="${course.description}"></p>

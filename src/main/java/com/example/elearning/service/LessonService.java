@@ -4,7 +4,6 @@ import com.example.elearning.model.Course;
 import com.example.elearning.model.Lesson;
 import com.example.elearning.repository.LessonRepository;
 import com.example.elearning.repository.CourseRepository;
-import org.apache.tomcat.util.http.fileupload.impl.IOFileUploadException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

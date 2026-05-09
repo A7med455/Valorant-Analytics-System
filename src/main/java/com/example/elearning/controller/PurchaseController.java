@@ -29,7 +29,7 @@ public class PurchaseController {
             purchaseService.purchaseCourse(userId, courseId);
             return "redirect:/profile/my-courses";
         } catch (IllegalArgumentException e) {
-            return "redirect:/error?message=" + e.getMessage();
+            return "redirect:/courses?error=" + e.getMessage();
         }
     }
 }

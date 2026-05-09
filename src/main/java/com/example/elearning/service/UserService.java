@@ -4,7 +4,6 @@ import com.example.elearning.model.User;
 import com.example.elearning.model.Wallet;
 import com.example.elearning.repository.UserRepository;
 import com.example.elearning.repository.WalletRepository;
-import com.example.elearning.model.Wallet;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 

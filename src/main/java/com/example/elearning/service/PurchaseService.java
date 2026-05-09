@@ -66,7 +66,7 @@ public class PurchaseService {
         enrollment.setEnrolledAt(LocalDateTime.now());
         enrollmentRepository.save(enrollment);
 
-        transactionService.saveTransaction(userId, "purchase", -price, "Purchased: " + course.getTitle());
+        transactionService.saveTransaction(userId, "PURCHASE", -price, "Purchased: " + course.getTitle());
 
     }
 }

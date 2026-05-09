@@ -16,9 +16,9 @@ public class UserService {
     private final UserRepository userRepository;
     private  final WalletRepository walletRepository;
 
-    public UserService(UserRepository userRepository , WalletRepository walletRepository, WalletRepository walletRepository1) {
+    public UserService(UserRepository userRepository, WalletRepository walletRepository) {
         this.userRepository = userRepository;
-        this.walletRepository = walletRepository1;
+        this.walletRepository = walletRepository;
     }
 
     //======================================//

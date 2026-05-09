@@ -12,13 +12,13 @@
 
 <div id="courses-container">
 
-    <p th:if="${#lists.isEmpty(courses)}">No enrolled courses yet.</p>
+    <p th:if="${#lists.isEmpty(myCourses)}">No enrolled courses yet.</p>
 
-    <div th:each="course : ${courses}" class="course-card">
+    <div th:each="course : ${myCourses}" class="course-card">
         <img th:src="${course.imageUrl}" th:alt="${course.title}" width="250">
         <h3 th:text="${course.title}"></h3>
         <p>Category: <span th:text="${course.category}"></span></p>
-        <a th:href="@{/watch-lesson(course_id=${course.id})}">Watch Lessons</a>
+        <a th:href="@{/courses/{id}(id=${course.id})}">Watch Lessons</a>
     </div>
 
 </div>

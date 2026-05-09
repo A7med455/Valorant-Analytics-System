@@ -49,7 +49,13 @@ public class CourseController {
         }
         model.addAttribute("course", course);
         model.addAttribute("sessionUser", sessionUser);
-        model.addAttribute("lessons", lessonService.getLessonsByCourse(id));  // ← ADD
+
+        // Only show lessons if user is logged in AND enrolled
+        if (sessionUser.isLoggedIn() && enrollmentService.isEnrolled(sessionUser.getUserId(), id))
+        {
+            model.addAttribute("lessons", lessonService.getLessonsByCourse(id));
+        }
+
         return "course-detail";
     }
     @GetMapping("/my-courses")

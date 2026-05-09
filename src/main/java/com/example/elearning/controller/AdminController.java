@@ -33,7 +33,8 @@ public class AdminController {
         // Fetch all courses and users from services and add to model
         model.addAttribute("courses", courseService.getAllCourses());
         model.addAttribute("users", userService.getAllUsers());
-        return "admin/dashboard.html";
+        model.addAttribute("sessionUser", sessionUser);
+        return "admin/dashboard";
     }
 
     // Show add course form
@@ -62,7 +63,7 @@ public class AdminController {
             model.addAttribute("course", course);
             return "admin/add-course";
         }
-        return "redirect:/admin/dashboard.html";
+        return "redirect:/admin/dashboard";
     }
 
     // Show edit form
@@ -94,7 +95,7 @@ public class AdminController {
             model.addAttribute("course", course);
             return "admin/edit-course";
         }
-        return "redirect:/admin/dashboard.html";
+        return "redirect:/admin/dashboard";
     }
 
     // Delete course
@@ -104,8 +105,8 @@ public class AdminController {
         try {
             courseService.deleteCourse(id);
         } catch (Exception e) {
-            return "redirect:/admin/dashboard.html";
+            return "redirect:/admin/dashboard";
         }
-        return "redirect:/admin/dashboard.html";
+        return "redirect:/admin/dashboard";
     }
 }

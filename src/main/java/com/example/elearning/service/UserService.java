@@ -49,7 +49,6 @@ public class UserService {
         return userRepository.findByEmail(email).orElse(null);
     }
     // Save or update user
-    @Transactional
     public User save(User user) {
         if (user == null) {
             throw new IllegalArgumentException("User cannot be null");
@@ -80,7 +79,7 @@ public class UserService {
     }
 
     // Update existing user
-    @Transactional
+
     public User update(User user) {
         if (user == null || user.getId() == null) {
             throw new IllegalArgumentException("User and User ID cannot be null");
@@ -96,7 +95,7 @@ public class UserService {
     }
 
     // Delete user by ID
-    @Transactional
+
     public void deleteById(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("User ID cannot be null");
@@ -153,7 +152,7 @@ public class UserService {
     }
 
     // Toggle user status (activate/deactivate)
-    @Transactional
+
     public void toggleStatus(Long userId) {
         User user = findById(userId);
         if (user != null) {

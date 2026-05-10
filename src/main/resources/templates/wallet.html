@@ -9,22 +9,16 @@
 <a href="/logout" style="color: red; float: right; margin: 10px;">Logout</a>
 <h2 th:text="'Welcome, ' + ${name}">Welcome</h2>
 
-<!-- ═══════════════════════════════════════════
-     WALLET BALANCE
-════════════════════════════════════════════ -->
+
 <h3>Wallet Balance</h3>
 <p th:text="'Balance: ' + ${balance} + ' EGP'">Balance: 0 EGP</p>
 
-<!-- Error message -->
+
 <p th:if="${error != null}" style="color:red;" th:text="${error}"></p>
 
-<!-- ═══════════════════════════════════════════
-     CARD SECTION
-     If card exists → show card info + top-up form
-     If no card    → show "Add Card" button
-════════════════════════════════════════════ -->
 
-<!-- ── User HAS a card ── -->
+
+
 <div th:if="${card != null}">
 
     <h3>Linked Card</h3>
@@ -33,7 +27,7 @@
     <p th:text="'Expiry: ' + ${card.expiryMonth} + '/' + ${card.expiryYear}"></p>
     <p th:text="'Card Balance: ' + ${card.balance} + ' EGP'"></p>
 
-    <!-- Top-Up Form (only shown when card exists) -->
+
     <h3>Top Up Wallet</h3>
     <form action="/wallet/topup" method="post">
         <label>Amount (EGP):
@@ -44,7 +38,7 @@
 
 </div>
 
-<!-- ── User has NO card ── -->
+
 <div th:if="${card == null}">
     <p>You have no card linked to your account.</p>
     <a href="/wallet/add-card">
@@ -52,9 +46,7 @@
     </a>
 </div>
 
-<!-- ═══════════════════════════════════════════
-     TRANSACTION HISTORY
-════════════════════════════════════════════ -->
+
 <h3>Transaction History</h3>
 
 <div th:if="${transactions == null or #lists.isEmpty(transactions)}">

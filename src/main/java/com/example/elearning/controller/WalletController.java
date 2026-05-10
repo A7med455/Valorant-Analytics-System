@@ -35,7 +35,7 @@ public class WalletController {
     @GetMapping("/wallet")
     public String viewWallet(Model model) {
         //first check user logged in or not
-        if (sessionUser.getUserId() == null) {
+        if (!sessionUser.isLoggedIn()) {
             return "redirect:/login";
         }
         Long userId = sessionUser.getUserId();
@@ -52,7 +52,7 @@ public class WalletController {
 
     @PostMapping("/wallet/topup")
     public String handleTopUp(@RequestParam double amount, Model model) {
-        if (sessionUser.getUserId() == null) {
+        if (!sessionUser.isLoggedIn()) {
             return "redirect:/login";
         }
         Long userId = sessionUser.getUserId();
@@ -73,11 +73,11 @@ public class WalletController {
 
     @GetMapping("/wallet/add-card")
     public String showAddCardForm(Model model) {
-        if (sessionUser.getUserId() == null) {
-             return "redirect:/login";
+        if (!sessionUser.isLoggedIn()) {
+            return "redirect:/login";
         }
         model.addAttribute("sessionUser", sessionUser);
-         return "add-card";
+        return "add-card";
     }
 
     @PostMapping("/wallet/add-card")
@@ -85,8 +85,8 @@ public class WalletController {
                                 @RequestParam int expiryYear,
                                 @RequestParam String cvv,
                                 @RequestParam Double initialBalance, Model model) {
-        if (sessionUser.getUserId() == null) {
-             return "redirect:/login";
+        if (!sessionUser.isLoggedIn()) {
+            return "redirect:/login";
         }
         Long userId = sessionUser.getUserId();
         try {
@@ -113,4 +113,3 @@ public class WalletController {
         return "wallet";
     }
 }
-

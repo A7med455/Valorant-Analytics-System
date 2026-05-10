@@ -2,10 +2,13 @@ package com.example.elearning.session;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
+import java.io.Serializable;
 
 @Component
 @SessionScope
-public class SessionUser {
+public class SessionUser implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     // Fields
     private Long userId;
